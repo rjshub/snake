@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>贪吃蛇</title>
+    <script src="tanchishe.js"></script>
+    <link rel="icon" href="img/123.png">
+</head>
+<style>
+    body{
+        width: 100%;
+        height: 100%;
+        margin:0;
+        overflow: hidden;
+        background: url("img/bg.png") repeat center top;
+    }
+    /*整体布局*/
+    div{
+        box-sizing: border-box;
+        padding: 0;
+        margin:0;
+    }
+    .fanwei{
+        width: 502px;
+        height: 502px;
+        margin:0 auto;
+        border: 1px solid #333;
+        position: relative;
+        top:40px;
+        background: #241b18;
+        font-size: 20px;
+        color: #333;
+        text-align: center;
+        line-height: 50px;
+    }
+    .fanwei div{
+        width: 20px;
+        height: 20px;
+        float: left;
+    }
+    .fanwei .fenshu{
+        width: 50px;
+        height: 50px;
+        border-radius: 15px;
+        border:1px solid #333;
+        font-size: 20px;
+        color: #333;
+        text-align: center;
+        line-height: 50px;
+        position: absolute;
+        left: -60px;
+        top:70px;
+        background:#fff;
+
+    }
+    .fanwei .guan{
+        width: 50px;
+        height: 50px;
+        border-radius: 15px;
+        border:1px solid #333;
+        font-size: 20px;
+        color: blue;
+        text-align: center;
+        line-height: 50px;
+        position: absolute;
+        left: -60px;
+        top:140px;
+        background:#fff;
+
+    }
+    .fanwei .kaiguan{
+        width: 70px;
+        height: 50px;
+        border-radius: 15px;
+        border:1px solid #333;
+        font-size: 20px;
+        color: #333;
+        text-align: center;
+        line-height: 50px;
+        position: absolute;
+        left: -160px;
+        top:0;
+        background:#e2b241;
+    }
+    .fanwei .newgame{
+        width: 70px;
+        height: 50px;
+        border-radius: 15px;
+        border:1px solid #333;
+        font-size: 20px;
+        color: #333;
+        text-align: center;
+        line-height: 50px;
+        position: absolute;
+        left: -80px;
+        top:0px;
+        background:#e2b241;
+    }
+    .fanwei .xin-1{
+        width: 100px;
+        height: 50px;
+        border-radius: 15px;
+        position: absolute;
+        left: -160px;
+        top:70px;
+        background:#e2b241;
+        color: #333;
+    }
+
+    .fanwei .xin-2{
+        width: 100px;
+        height: 50px;
+        border-radius: 15px;
+        position: absolute;
+        left: -160px;
+        top:140px;
+        background: #e2b241;
+        color: #333;
+    }
+    .fanwei .text{
+        width: 300px;
+        height: 500px;
+        position: absolute;
+        left: 520px;
+        top:0;
+        font-size: 16px;
+        line-height: 20px;
+        text-align: left;
+        background: #e2b241;
+        padding:5px;
+    }
+    /*设置颜色*/
+    .she{
+        background: #25FF50;
+        border-radius: 40%;
+    }
+    .shetour{
+        background: url("img/123.png");
+        background-size: cover;
+    }
+    .shetoul{
+        background: url("img/2.png");
+        background-size: cover;
+    }
+    .shetout{
+        background: url("img/3.png");
+        background-size: cover;
+    }
+    .shetoub{
+        background: url("img/1.png");
+        background-size: cover;
+    }
+    .food{
+        background: #fff;
+        border-radius: 50% ;
+    }
+</style>
+<body>
+    <div class="fanwei">
+        <div class="xin-1"><b>分数：</b></div>
+        <div class="fenshu">0</div>
+        <div class="xin-2"><b>关卡：</b></div>
+        <div class="guan">1</div>
+        <div class="kaiguan">开始</div>
+        <input type='submit' class="newgame" value="重开">
+        <div class="text">
+            <h2>贪吃蛇大作战</h2>
+            <p><b>游戏说明：</b>
+                <br>
+            1.页面加载完成后，点击开始（或摁空格）即可开始游戏
+                <br>
+                <br>
+            2.由方向键‘↑’，‘↓’，‘→’，‘←’控制蛇移动方向
+                <br>
+                <br>
+            3.游戏过程中，点击继续，或者空格可以暂停游戏
+                <br>
+                <br>
+            4.当蛇每吃到一次食物，会增加长度，并增加一分
+                <br>
+                <br>
+            5.当分数到达 <b>30</b> 时，进入下一关
+                <br>
+                <br>
+            6，进入下一关，分数和蛇的长度恢复初始化，但速度会快
+                <br>
+                <br>
+            加油！挑战者们！</p>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+
+
+
+
+//    //定义场景
+//    var fanwei=document.querySelector('.fanwei')
+//    console.log(fanwei)
+//    var str='';
+//    for (var i=0;i<25;i++){
+//        for (var j=0;j<25;j++){
+//            str+=`<div id=c${j}-${i}></div>`
+//        }
+//    }
+////    console.log(str)
+//    fanwei.innerHTML=str
+//    //场景结束
+////    定义蛇
+//    var she=[
+//        {x:0,y:0},
+//        {x:1,y:0},
+//        {x:2,y:0}
+//    ];
+//    she.forEach(function (value) {
+//        console.log(value.x,value.y)
+//        var id=`#c${value.x}-${value.y}`
+//        var s=document.querySelector(id)
+//        console.log(s)
+//        s.classList.add('she')
+//    })
+//
+//
+//    //定义food
+//    var food=getfood()
+//    function getfood() {
+//        do{
+//            var x=Math.floor(Math.random()*25);
+//            var y=Math.floor(Math.random()*25);
+//        }while (pan(x,y))
+//        console.log(pan(x,y))
+//        var idfood=`#c${x}-${y}`
+//        var f=document.querySelector(idfood)
+////    console.log(f)
+//        f.classList.add('food');
+//        return {x:x,y:y}
+//    }
+//
+//    function pan(x,y) {
+//        var f= she.some(function (value) {
+//            return  value.x==x && value.y==y
+//        })
+////        console.log(1)
+//        console.log(f)
+//        return f
+//    }
+//    console.log(food)
+//    //动效
+//
+//
+//    var par='r';
+//    document.body.onkeydown=function (e) {
+//        var on=e.keyCode
+////        console.log(on)
+//        switch (on){
+//            case 37:if(par=='r'){
+//                break;}
+//                par='l';
+//                break
+//            case 38:if(par=='b'){
+//                break;}par='t';break
+//            case 39:if(par=='l'){
+//                break;}par='r';break
+//            case 40:if(par=='t'){
+//                break;}par='b';break
+//        }
+//        console.log(par)
+//    }
+//
+//    var t=setInterval(move,200);
+//    function move() {
+//        console.log(she)
+//        var header=she[she.length-1];
+////        console.log(header,header.x)
+//        var newheader=header
+//        switch (par){
+//            case 'r':newheader={x:header.x+1,y:header.y};break;
+//            case 'l':newheader={x:header.x-1,y:header.y};break;
+//            case 't':newheader={x:header.x,y:header.y-1};break;
+//            case 'b':newheader={x:header.x,y:header.y+1};break;
+//        }
+//        var newdiv=document.querySelector(`#c${newheader.x}-${newheader.y}`)
+//        console.log(newdiv)
+//        if (newdiv==null||pan(newheader.x,newheader.y)){  //判断游戏情况
+//            alert('游戏结束')
+//            clearInterval(t)
+//        }
+//            newdiv.classList.add('she')
+//        she.push(newheader)
+//        if(newheader.x==food.x&&newheader.y==food.y){
+//                console.log(food)
+//            document.querySelector(`#c${food.x}-${food.y}`).className='she'
+//            food=getfood()
+//        }else {
+//            var end=she[0];
+////        console.log(end)
+//            var endheader=document.querySelector(`#c${end.x}-${end.y}`)
+//            endheader.classList.remove('she')
+//            she.shift(endheader)
+//            console.log(she)
+//        }
+//    }
+////    var t=setInterval(move,200);
+
+</script>
